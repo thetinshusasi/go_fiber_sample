@@ -12,6 +12,16 @@ import (
 	"gorm.io/gorm"
 )
 
+// CreateNoteSchema godoc
+// @Summary Create a new note
+// @Description Create a new note with the provided data
+// @Tags Notes
+// @Accept json
+// @Produce json
+// @Param payload body models.CreateNoteSchema true "Note Payload"
+// @Success 201 {object} models.Note
+// @Failure 400 {object} error
+// @Router /api/notes [post]
 func CreateNoteHandler(c *fiber.Ctx) error {
 	var payload *models.CreateNoteSchema
 
@@ -46,6 +56,17 @@ func CreateNoteHandler(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{"status": "success", "data": fiber.Map{"note": newNote}})
 }
 
+// FindNoteHandler godoc
+//
+// @Summary		Find Note
+// @Description	Find a Note
+// @Tags			Notes
+// @Produce		json
+//
+// @Success		200	{array}		models.Note
+//
+// @Failure		400	{object}	error
+// @Router			/api/notes [get]
 func FindNotes(c *fiber.Ctx) error {
 	var page = c.Query("page", "1")
 	var limit = c.Query("limit", "10")
